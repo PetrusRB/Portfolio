@@ -1,10 +1,7 @@
-export function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+import DOMPurify from "dompurify";
+
+export function sanitizeHtml(str: string): string {
+  return DOMPurify.sanitize(str, { ALLOWED_TAGS: [] });
 }
 
 export function sanitizeUrl(url: string): string {

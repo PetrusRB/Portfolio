@@ -6,7 +6,7 @@
     <title>404 - Petrus.dev</title>
 
     <link rel="stylesheet" href="src/styles.css" />
-    <link rel="icon" type="image/x-icon" href="src/images/avatar.png">
+    <link rel="icon" type="image/x-icon" href="src/images/avatar.png" />
     <style>
       .notfound {
         min-height: 100vh;
@@ -51,8 +51,13 @@
       }
 
       @keyframes blink-caret {
-        from, to { opacity: 1; }
-        50% { opacity: 0; }
+        from,
+        to {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
       }
     </style>
   </head>
@@ -68,7 +73,9 @@
         <div>
           <div class="notfound-code">404</div>
           <p class="notfound-message">
-            <span style="color: var(--term-symbol)">$:</span>
+            <a style="font-weight: bold; color: var(--term-symbol)"
+              >pedro@desktop:~$
+            </a>
             Pagina nao encontrada<span class="notfound-cursor"></span>
           </p>
           <div class="notfound-actions">
@@ -79,9 +86,13 @@
     </main>
 
     <script>
-      (function() {
+      (function () {
         var stored = localStorage.getItem("theme");
-        var theme = stored || (matchMedia("(prefers-color-scheme:light)").matches ? "light" : "dark");
+        var theme =
+          stored ||
+          (matchMedia("(prefers-color-scheme:light)").matches
+            ? "light"
+            : "dark");
         document.documentElement.classList.add(theme);
       })();
     </script>

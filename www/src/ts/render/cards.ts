@@ -1,5 +1,5 @@
 import type { GitHubRepo } from "../github/schema";
-import { escapeHtml, sanitizeUrl } from "./sanitize";
+import { sanitizeHtml, sanitizeUrl } from "./sanitize";
 
 const PER_PAGE = 6;
 
@@ -16,13 +16,13 @@ export function createRepoCard(repo: GitHubRepo): HTMLElement {
   card.className = "project-card";
 
   const langTag = repo.language
-    ? `<span class="tag">${escapeHtml(repo.language)}</span>`
+    ? `<span class="tag">${sanitizeHtml(repo.language)}</span>`
     : "";
 
-  const name = escapeHtml(repo.name);
-  const desc = escapeHtml(repo.description || "Sem descrição");
+  const name = sanitizeHtml(repo.name);
+  const desc = sanitizeHtml(repo.description || "Sem descrição");
   const url = sanitizeUrl(repo.html_url);
-  const label = escapeHtml(repo.html_url.replace("https://github.com/", ""));
+  const label = sanitizeHtml(repo.html_url.replace("https://github.com/", ""));
 
   card.innerHTML = `
     <h3>${name}</h3>
@@ -40,48 +40,63 @@ export function createRepoCard(repo: GitHubRepo): HTMLElement {
   return card;
 }
 
-function renderSkeletons(): string {
-  return `
-    <article class="project-card skeleton">
-      <div class="sk-title"></div>
-      <div class="sk-text"></div>
-      <div class="sk-text sk-short"></div>
-      <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
-    </article>
-    <article class="project-card skeleton">
-      <div class="sk-title"></div>
-      <div class="sk-text"></div>
-      <div class="sk-text sk-short"></div>
-      <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
-    </article>
-    <article class="project-card skeleton">
-      <div class="sk-title"></div>
-      <div class="sk-text"></div>
-      <div class="sk-text sk-short"></div>
-      <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
-    </article>
-  `;
+function createSkeleton(): HTMLElement {
+  const card = document.createElement("article");
+  card.className = "project-card skeleton";
+
+  const title = document.createElement("div");
+  title.className = "sk-title";
+
+  const text1 = document.createElement("div");
+  text1.className = "sk-text";
+
+  const text2 = document.createElement("div");
+  text2.className = "sk-text sk-short";
+
+  const tags = document.createElement("div");
+  tags.className = "sk-tags";
+  tags.append(createEl("sk-tag"), createEl("sk-tag"));
+
+  card.append(title, text1, text2, tags);
+  return card;
+}
+
+function createEl(className: string): HTMLElement {
+  const el = document.createElement("div");
+  el.className = className;
+  return el;
+}
+
+function renderSkeletons(): HTMLElement[] {
+  return [createSkeleton(), createSkeleton(), createSkeleton()];
 }
 
 function showErrorModal(message: string): void {
   const existing = document.getElementById("error-modal");
   if (existing) existing.remove();
 
+  const modal = document.createElement("div");
+  modal.className = "error-modal";
+
+  const icon = document.createElement("div");
+  icon.className = "error-modal-icon";
+  icon.textContent = "!";
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  const btn = document.createElement("button");
+  btn.className = "btn btn-primary error-modal-close";
+  btn.textContent = "Entendido";
+
+  modal.append(icon, text, btn);
+
   const overlay = document.createElement("div");
   overlay.id = "error-modal";
   overlay.className = "error-modal-overlay";
-  overlay.innerHTML = `
-    <div class="error-modal">
-      <div class="error-modal-icon">!</div>
-      <p>${escapeHtml(message)}</p>
-      <button class="btn btn-primary error-modal-close">Entendido</button>
-    </div>
-  `;
+  overlay.appendChild(modal);
 
-  overlay.querySelector(".error-modal-close")?.addEventListener("click", () => {
-    overlay.remove();
-  });
-
+  btn.addEventListener("click", () => overlay.remove());
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) overlay.remove();
   });
@@ -119,21 +134,21 @@ export async function loadRepos(): Promise<void> {
   const cached = getCache();
   if (cached && isCacheValid(cached)) {
     setRepos(cached.data);
-    container.innerHTML = "";
+    container.replaceChildren();
     renderPage();
     return;
   }
 
-  container.innerHTML = renderSkeletons();
+  container.replaceChildren(...renderSkeletons());
   if (loadMoreBtn) loadMoreBtn.style.display = "none";
 
   try {
     setRepos(await fetchAllRepos());
-    container.innerHTML = "";
+    container.replaceChildren();
     renderPage();
   } catch (err) {
     console.error("Erro ao carregar repositórios:", err);
-    container.innerHTML = "";
+    container.replaceChildren();
     showErrorModal(
       err instanceof Error
         ? `Falha ao carregar projetos: ${err.message}`
