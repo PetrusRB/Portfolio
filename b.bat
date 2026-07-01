@@ -1,9 +1,26 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set "RUN_ONLY=0"
+if "%1"=="--direct" set "RUN_ONLY=1"
+
+if %RUN_ONLY%==1 (
+    echo.
+    echo ========================================
+    echo   Portfolio - Run
+    echo ========================================
+    echo.
+    echo   http://localhost:8000
+    echo   Ctrl+C para parar
+    echo ========================================
+    echo.
+    build\main.exe
+    exit /b 0
+)
+
 echo.
 echo ========================================
-echo   Portfolio - Build
+echo   Scriptzinha de - Build
 echo ========================================
 echo.
 
@@ -74,9 +91,8 @@ echo.
 :: ============================================
 echo [4/4] Executando servidor...
 echo ========================================
-echo   Servidor ligado >:3
 echo   Ctrl+C para parar
 echo ========================================
 echo.
 
-build\server.exe
+build\main.exe
