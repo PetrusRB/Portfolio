@@ -74,7 +74,7 @@ echo.
 :: ============================================
 echo [4/4] Executando servidor...
 echo ========================================
-echo   http://localhost:8000
+echo   Servidor ligado >:3
 echo   Ctrl+C para parar
 echo ========================================
 echo.
