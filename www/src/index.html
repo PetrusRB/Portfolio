@@ -12,22 +12,41 @@
       <nav class="navbar">
         <a href="#home" class="logo">Peter<span>.dev</span></a>
 
-        <ul class="nav-links">
-          <li><a href="#home">Início</a></li>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#projects">Projetos</a></li>
-          <li><a href="#contact">Contato</a></li>
-        </ul>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#projects">Projetos</a></li>
+            <li><a href="#contact">Contato</a></li>
+          </ul>
 
-        <details class="nav-details">
-          <summary class="menu-toggle" aria-label="Abrir menu">☰</summary>
-          <nav class="nav-mobile">
-            <a href="#home">Início</a>
-            <a href="#about">Sobre</a>
-            <a href="#projects">Projetos</a>
-            <a href="#contact">Contato</a>
-          </nav>
-        </details>
+          <button class="theme-toggle" aria-label="Alternar tema">
+            <svg class="icon-moon" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </button>
+
+          <details class="nav-details">
+            <summary class="menu-toggle" aria-label="Abrir menu">☰</summary>
+            <nav class="nav-mobile">
+              <a href="#home">Início</a>
+              <a href="#about">Sobre</a>
+              <a href="#projects">Projetos</a>
+              <a href="#contact">Contato</a>
+            </nav>
+          </details>
+        </div>
       </nav>
     </header>
 
@@ -36,13 +55,13 @@
         <div class="hero-content">
           <span class="badge">Full Stack Developer</span>
 
-          <h2>
+          <h2 class="font-incognito">
             Construindo apps <span>rápidas</span>, <span>escaláveis</span> e
             modernas.
           </h2>
 
           <p class="hero-sub">
-            <a style="font-weight: bold; color: var(--logo-span)">$:</a>
+            <a style="font-weight: bold; color: var(--term-symbol);">$:</a>
             <span
               class="typewriter"
               data-text="Desenvolvedor especializado em C++, Next.js, Vue e sistemas de alta performance."
@@ -65,17 +84,7 @@
           </div>
 
           <div class="about-content">
-            <p>
-              Sou um Programador em desenvolvimento contínuo. Sempre em busca de
-              aprimoramento, aprendizado de novas habilidades e entrega de
-              projetos significativos. Minha Meta? Alcançar o nível sênior e
-              seguir progredindo.
-            </p>
-
-            <p>
-              Trabalho principalmente com C++, Next.js, React e Vue. Gosto de
-              desenvolver API's, Bots e Jogos 3D.
-            </p>
+            <zero-md src="src/me.md" no-shadow></zero-md>
 
             <div class="about-stats">
               <div class="stat">
@@ -95,67 +104,27 @@
       <section id="projects" class="section">
         <h2>Projetos</h2>
 
-        <div class="projects-grid">
-          <article class="project-card">
-            <h3>Motor Gráfico</h3>
-            <p>
-              Engine 3D desenvolvida em C++ e OpenGL, com pipeline de
-              renderização customizado.
-            </p>
-            <p class="project-link">
-              <span>Github:</span>
-              <a target="_blank" href="https://github.com/PetrusRB/3DEngine"
-                >github.com/PetrusRB/3DEngine</a
-              >
-            </p>
-            <div class="tags">
-              <span class="tag">C++</span>
-              <span class="tag">OpenGL</span>
-            </div>
+        <div class="projects-grid" id="repos">
+          <article class="project-card skeleton">
+            <div class="sk-title"></div>
+            <div class="sk-text"></div>
+            <div class="sk-text sk-short"></div>
+            <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
           </article>
-          <article class="project-card">
-            <h3>Petrus Bot</h3>
-            <p>
-              Um bot multifuncional para Discord, escrito em Typescript com
-              poquinho de rust (pra api de memes). Com funcionalidades como
-              musica, moderação, economia, ranks e comandos utilitários
-            </p>
-            <p class="project-link">
-              <span>Github:</span>
-              <a target="_blank" href="https://github.com/PetrusRB/petrusv1"
-                >github.com/PetrusRB/petrusv1</a
-              >
-            </p>
-            <div class="tags">
-              <span class="tag">C++</span>
-              <span class="tag">OpenGL</span>
-            </div>
+          <article class="project-card skeleton">
+            <div class="sk-title"></div>
+            <div class="sk-text"></div>
+            <div class="sk-text sk-short"></div>
+            <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
           </article>
-
-          <!-- <article class="project-card"> -->
-          <!--   <h3>Rede Social</h3> -->
-          <!--   <p> -->
-          <!--     Plataforma social moderna construída com Next.js, focada em -->
-          <!--     performance e UX. -->
-          <!--   </p> -->
-          <!--   <div class="tags"> -->
-          <!--     <span class="tag">Next.js</span> -->
-          <!--     <span class="tag">React</span> -->
-          <!--   </div> -->
-          <!-- </article> -->
-
-          <article class="project-card">
-            <h3>Game Multiplayer</h3>
-            <p>
-              Sistema multiplayer com Godot e servidor dedicado para baixa
-              latência.
-            </p>
-            <div class="tags">
-              <span class="tag">Godot</span>
-              <span class="tag">Networking</span>
-            </div>
+          <article class="project-card skeleton">
+            <div class="sk-title"></div>
+            <div class="sk-text"></div>
+            <div class="sk-text sk-short"></div>
+            <div class="sk-tags"><div class="sk-tag"></div><div class="sk-tag"></div></div>
           </article>
         </div>
+      </section>
       </section>
 
       <section id="contact" class="section">
@@ -178,5 +147,8 @@
     </footer>
 
     <script src="dist/script.js"></script>
+    <script src="src/pkgs/webcomponent.min.js"></script>
+    
+    <script type="module" src="src/pkgs/zero-md.min.js"></script>
   </body>
 </html>

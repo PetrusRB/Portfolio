@@ -13,6 +13,8 @@ static const char *get_mime(const char *url) {
     return "text/css";
   if (strcmp(ext, ".js") == 0)
     return "application/javascript";
+  if (strcmp(ext, ".md") == 0)
+    return "text/markdown";
   return "text/plain";
 }
 
