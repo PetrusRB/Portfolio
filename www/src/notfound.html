@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Petrus.dev</title>
+
+    <link rel="stylesheet" href="src/styles.css" />
+    <link rel="icon" type="image/x-icon" href="src/images/avatar.png">
+    <style>
+      .notfound {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .notfound-code {
+        font-family: var(--font-mono);
+        font-size: clamp(6rem, 15vw, 10rem);
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+
+      .notfound-message {
+        font-family: var(--font-mono);
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
+
+      .notfound-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .notfound-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1.2em;
+        background: var(--primary);
+        margin-left: 4px;
+        vertical-align: text-bottom;
+        animation: blink-caret 0.9s step-end infinite;
+      }
+
+      @keyframes blink-caret {
+        from, to { opacity: 1; }
+        50% { opacity: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <a href="/" class="logo">Petrus<span>.dev</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="notfound">
+        <div>
+          <div class="notfound-code">404</div>
+          <p class="notfound-message">
+            <span style="color: var(--term-symbol)">$:</span>
+            Pagina nao encontrada<span class="notfound-cursor"></span>
+          </p>
+          <div class="notfound-actions">
+            <a href="/" class="btn btn-primary">Voltar ao Inicio</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function() {
+        var stored = localStorage.getItem("theme");
+        var theme = stored || (matchMedia("(prefers-color-scheme:light)").matches ? "light" : "dark");
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+  </body>
+</html>
