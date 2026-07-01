@@ -2,11 +2,13 @@
   "name": "www",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch"
+    "build": "esbuild src/ts/main.ts --bundle --outfile=dist/script.js --target=es2020 --minify",
+    "watch": "esbuild src/ts/main.ts --bundle --outfile=dist/script.js --target=es2020 --watch"
   },
   "package_manager": "pnpm@10.33.0",
   "devDependencies": {
-    "typescript": "^5.4.0"
+    "esbuild": "^0.28.1",
+    "typescript": "^5.4.0",
+    "zod": "^4.4.3"
   }
 }

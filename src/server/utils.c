@@ -3,18 +3,34 @@
 #include <stdlib.h>
 #include <string.h>
 
+static const struct {
+  const char *ext;
+  const char *type;
+} mime_table[] = {
+    {".html", "text/html"},
+    {".css", "text/css"},
+    {".js", "application/javascript"},
+    {".md", "text/markdown"},
+    {".ico", "image/x-icon"},
+    {".png", "image/png"},
+    {".jpg", "image/jpeg"},
+    {".jpeg", "image/jpeg"},
+    {".svg", "image/svg+xml"},
+    {".woff2", "font/woff2"},
+    {".woff", "font/woff"},
+    {".json", "application/json"},
+};
+
 static const char *get_mime(const char *url) {
   const char *ext = strrchr(url, '.');
   if (!ext)
     return "text/plain";
-  if (strcmp(ext, ".html") == 0)
-    return "text/html";
-  if (strcmp(ext, ".css") == 0)
-    return "text/css";
-  if (strcmp(ext, ".js") == 0)
-    return "application/javascript";
-  if (strcmp(ext, ".md") == 0)
-    return "text/markdown";
+
+  for (size_t i = 0; i < sizeof(mime_table) / sizeof(mime_table[0]); i++) {
+    if (strcmp(ext, mime_table[i].ext) == 0)
+      return mime_table[i].type;
+  }
+
   return "text/plain";
 }
 

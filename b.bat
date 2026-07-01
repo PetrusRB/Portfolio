@@ -44,7 +44,7 @@ echo       Clean concluido
 echo.
 
 :: ============================================
-::  TYPESCRIPT
+::  TYPESCRIPT (esbuild)
 :: ============================================
 echo [2/4] Compilando TypeScript...
 
@@ -54,7 +54,7 @@ if not exist node_modules (
     call pnpm install --silent 2>nul
 )
 
-call pnpm tsc 2>nul
+call pnpm exec esbuild src/ts/main.ts --bundle --outfile=dist/script.js --target=es2020 --minify
 if %errorlevel% neq 0 (
     echo [ERRO] Erro ao compilar TypeScript
     cd ..
