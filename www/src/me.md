@@ -1,4 +1,4 @@
-Sou um Programador em desenvolvimento contínuo. Sempre em busca de
+Um Programador em desenvolvimento contínuo. Sempre em busca de
 aprimoramento, aprendizado de novas habilidades e entrega de
 projetos significativos. Minha Meta? Alcançar o nível sênior e
 seguir progredindo.
