@@ -14,7 +14,7 @@ if %RUN_ONLY%==1 (
     echo   Ctrl+C para parar
     echo ========================================
     echo.
-    build\main.exe
+    build\server.exe
     exit /b 0
 )
 
@@ -95,4 +95,4 @@ echo   Ctrl+C para parar
 echo ========================================
 echo.
 
-build\main.exe
+build\server.exe
