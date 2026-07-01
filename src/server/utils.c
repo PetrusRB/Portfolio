@@ -48,7 +48,7 @@ enum MHD_Result serve_file(struct MHD_Connection *connection,
     return ret;
   }
 
-  fseek(fp, 0, SEEK_END); // vai pro inicio
+  fseek(fp, 0, SEEK_END); // vai pro final
   long size = ftell(
       fp); // pega a quantidade de bytes que tem o arquivo após ir pro final.
   fseek(fp, 0, SEEK_SET); // volta pro começo
