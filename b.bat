@@ -7,10 +7,9 @@ if "%1"=="--direct" set "RUN_ONLY=1"
 if %RUN_ONLY%==1 (
     echo.
     echo ========================================
-    echo   Portfolio - Run
+    echo   Scriptzinha - Run
     echo ========================================
     echo.
-    echo   http://localhost:8000
     echo   Ctrl+C para parar
     echo ========================================
     echo.
@@ -20,7 +19,7 @@ if %RUN_ONLY%==1 (
 
 echo.
 echo ========================================
-echo   Scriptzinha de - Build
+echo   Scriptzinha - Build
 echo ========================================
 echo.
 
