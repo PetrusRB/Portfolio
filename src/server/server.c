@@ -44,18 +44,14 @@ static enum MHD_Result ahc_echo(void *cls, struct MHD_Connection *connection,
   (void)version;
   (void)upload_data;
 
-  // compara o método que esta sendo requisitado com o método GET.
-  // se não for método get então recusa.
   if (strcmp(method, "GET") != 0)
     return MHD_NO;
 
-  // dizer que esta processando.
   if (&dummy != *ptr) {
     *ptr = &dummy;
     return MHD_YES;
   }
 
-  // métodos get's não podem ser feitos upload.
   if (*upload_data_size != 0)
     return MHD_NO;
 
