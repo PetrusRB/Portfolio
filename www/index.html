@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peter.dev</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <a href="#home" class="logo">Peter<span>.dev</span></a>
+
+        <ul class="nav-links">
+          <li><a href="#home">Início</a></li>
+          <li><a href="#about">Sobre</a></li>
+          <li><a href="#projects">Projetos</a></li>
+          <li><a href="#contact">Contato</a></li>
+        </ul>
+
+        <details class="nav-details">
+          <summary class="menu-toggle" aria-label="Abrir menu">☰</summary>
+          <nav class="nav-mobile">
+            <a href="#home">Início</a>
+            <a href="#about">Sobre</a>
+            <a href="#projects">Projetos</a>
+            <a href="#contact">Contato</a>
+          </nav>
+        </details>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-content">
+          <span class="badge">Full Stack Developer</span>
+
+          <h2>
+            Construindo apps <span>rápidas</span>, <span>escaláveis</span> e
+            modernas.
+          </h2>
+
+          <p class="hero-sub">
+            <a style="font-weight: bold; color: var(--logo-span)">$:</a>
+            <span
+              class="typewriter"
+              data-text="Desenvolvedor especializado em C++, Next.js, Vue e sistemas de alta performance."
+            />
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">Explorar Projetos</a>
+            <a href="#contact" class="btn btn-outline">Contato</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <h2>Sobre Mim</h2>
+
+        <div class="about-grid">
+          <div class="about-image">
+            <img src="/images/avatar.png" loading="lazy" alt="Me" />
+          </div>
+
+          <div class="about-content">
+            <p>
+              Sou um Programador em desenvolvimento contínuo. Sempre em busca de
+              aprimoramento, aprendizado de novas habilidades e entrega de
+              projetos significativos. Minha Meta? Alcançar o nível sênior e
+              seguir progredindo.
+            </p>
+
+            <p>
+              Trabalho principalmente com C++, Next.js, React e Vue. Gosto de
+              desenvolver API's, Bots e Jogos 3D.
+            </p>
+
+            <div class="about-stats">
+              <div class="stat">
+                <h3>9+</h3>
+                <span>Anos Programando</span>
+              </div>
+
+              <div class="stat">
+                <h3>20+</h3>
+                <span>Projetos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <h2>Projetos</h2>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <h3>Motor Gráfico</h3>
+            <p>
+              Engine 3D desenvolvida em C++ e OpenGL, com pipeline de
+              renderização customizado.
+            </p>
+            <p class="project-link">
+              <span>Github:</span>
+              <a target="_blank" href="https://github.com/PetrusRB/3DEngine"
+                >github.com/PetrusRB/3DEngine</a
+              >
+            </p>
+            <div class="tags">
+              <span class="tag">C++</span>
+              <span class="tag">OpenGL</span>
+            </div>
+          </article>
+          <article class="project-card">
+            <h3>Petrus Bot</h3>
+            <p>
+              Um bot multifuncional para Discord, escrito em Typescript com
+              poquinho de rust (pra api de memes). Com funcionalidades como
+              musica, moderação, economia, ranks e comandos utilitários
+            </p>
+            <p class="project-link">
+              <span>Github:</span>
+              <a target="_blank" href="https://github.com/PetrusRB/petrusv1"
+                >github.com/PetrusRB/petrusv1</a
+              >
+            </p>
+            <div class="tags">
+              <span class="tag">C++</span>
+              <span class="tag">OpenGL</span>
+            </div>
+          </article>
+
+          <!-- <article class="project-card"> -->
+          <!--   <h3>Rede Social</h3> -->
+          <!--   <p> -->
+          <!--     Plataforma social moderna construída com Next.js, focada em -->
+          <!--     performance e UX. -->
+          <!--   </p> -->
+          <!--   <div class="tags"> -->
+          <!--     <span class="tag">Next.js</span> -->
+          <!--     <span class="tag">React</span> -->
+          <!--   </div> -->
+          <!-- </article> -->
+
+          <article class="project-card">
+            <h3>Game Multiplayer</h3>
+            <p>
+              Sistema multiplayer com Godot e servidor dedicado para baixa
+              latência.
+            </p>
+            <div class="tags">
+              <span class="tag">Godot</span>
+              <span class="tag">Networking</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <h2>Contato</h2>
+        <div class="contact-info">
+          <p>
+            Email:
+            <a href="mailto:contato@crown.dev">contato@crown.dev</a>
+          </p>
+          <p>
+            GitHub:
+            <a href="https://github.com/PetrusRB">github.com/PetrusRB</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Peter.dev. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="dist/script.js"></script>
+  </body>
+</html>

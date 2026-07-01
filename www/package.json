@@ -1,0 +1,12 @@
+{
+  "name": "www",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "package_manager": "pnpm@10.33.0",
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
