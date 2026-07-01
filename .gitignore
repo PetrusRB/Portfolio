@@ -1,6 +1,10 @@
 # Build
 build/
 
+# rapazito
+.mimocode
+.mimocode/
+
 # Output
 server.exe
 

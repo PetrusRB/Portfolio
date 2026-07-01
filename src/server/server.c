@@ -17,7 +17,7 @@ typedef struct {
 } Route;
 
 static Route routes[] = {
-    {"/", ROUTE_FILE, .file = "www/index.html"},
+    {"/", ROUTE_FILE, .file = "www/src/index.html"},
 };
 
 static enum MHD_Result route_request(struct MHD_Connection *connection,
