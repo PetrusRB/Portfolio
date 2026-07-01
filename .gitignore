@@ -1,6 +1,0 @@
-www/node_modules
-build/
-.gitignore
-node_modules/
-.env
-.env.*
