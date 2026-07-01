@@ -3,36 +3,36 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef enum { ROUTE_FILE, ROUTE_HANDLER } RouteType;
+typedef enum { ROUTE_FILE, ROUTE_HANDLER } TipoDeRota;
 
 typedef enum MHD_Result (*RouteHandler)(struct MHD_Connection *connection,
                                         const char *url);
 typedef struct {
-  const char *path;
-  RouteType type;
+  const char *caminho;
+  TipoDeRota tipo;
   union {
-    const char *file;
+    const char *arquivo;
     RouteHandler handler;
   };
-} Route;
+} Rota;
 
-static Route routes[] = {
-    {"/", ROUTE_FILE, .file = "www/src/index.html"},
+static Rota rotas[] = {
+    {"/", ROUTE_FILE, .arquivo = "www/src/index.html"},
 };
 
 static enum MHD_Result route_request(struct MHD_Connection *connection,
                                      const char *url) {
-  for (size_t i = 0; i < sizeof(routes) / sizeof(routes[0]); i++) {
-    if (strcmp(url, routes[i].path) == 0) {
-      if (routes[i].type == ROUTE_FILE)
-        return serve_file(connection, routes[i].file);
-      return routes[i].handler(connection, url);
+  for (size_t i = 0; i < sizeof(rotas) / sizeof(rotas[0]); i++) {
+    if (strcmp(url, rotas[i].caminho) == 0) {
+      if (rotas[i].tipo == ROUTE_FILE)
+        return serve_file(connection, rotas[i].arquivo);
+      return rotas[i].handler(connection, url);
     }
   }
 
-  char path[512];
-  snprintf(path, sizeof(path), "www%s", url);
-  return serve_file(connection, path);
+  char caminho[512];
+  snprintf(caminho, sizeof(caminho), "www%s", url);
+  return serve_file(connection, caminho);
 }
 
 static enum MHD_Result ahc_echo(void *cls, struct MHD_Connection *connection,

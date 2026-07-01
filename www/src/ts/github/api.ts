@@ -1,8 +1,8 @@
 import type { GitHubRepo } from "./schema";
 import { GitHubRepoArraySchema } from "./schema";
-import { getCache, setCache } from "./cache";
+import { getCache, setCache, isCacheValid } from "./cache";
 
-export async function fetchAllRepos(): Promise<GitHubRepo[]> {
+export async function fetchRepos(): Promise<GitHubRepo[]> {
   const cached = getCache();
   const headers: Record<string, string> = {};
 
@@ -27,4 +27,10 @@ export async function fetchAllRepos(): Promise<GitHubRepo[]> {
   const data = GitHubRepoArraySchema.parse(json);
   setCache(data, etag);
   return data;
+}
+
+export function getCachedRepos(): GitHubRepo[] | null {
+  const cached = getCache();
+  if (cached && isCacheValid(cached)) return cached.data;
+  return null;
 }

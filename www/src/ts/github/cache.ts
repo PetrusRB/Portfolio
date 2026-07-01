@@ -7,7 +7,7 @@ interface CacheEntry {
 }
 
 const CACHE_KEY = "github_repos";
-export const CACHE_TTL = 10 * 60 * 1000;
+const CACHE_TTL = 10 * 60 * 1000;
 
 export function getCache(): CacheEntry | null {
   try {
@@ -20,8 +20,7 @@ export function getCache(): CacheEntry | null {
 }
 
 export function setCache(data: GitHubRepo[], etag: string | null): void {
-  const entry: CacheEntry = { data, etag, timestamp: Date.now() };
-  localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+  localStorage.setItem(CACHE_KEY, JSON.stringify({ data, etag, timestamp: Date.now() }));
 }
 
 export function isCacheValid(entry: CacheEntry): boolean {

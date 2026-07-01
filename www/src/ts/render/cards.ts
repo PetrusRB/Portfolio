@@ -1,17 +1,20 @@
 import type { GitHubRepo } from "../github/schema";
 import { sanitizeHtml, sanitizeUrl } from "./sanitize";
+import { useState } from "../state";
+import { useQuery } from "../query";
+import { showErrorModal } from "../output/errors.ts";
 
 const PER_PAGE = 6;
 
-let allRepos: GitHubRepo[] = [];
-let currentPage = 0;
+const pageState = useState(0);
+const reposQuery = useQuery(async () => {
+  const { getCachedRepos, fetchRepos } = await import("../github/api");
+  const cached = getCachedRepos();
+  if (cached) return cached;
+  return fetchRepos();
+});
 
-export function setRepos(repos: GitHubRepo[]): void {
-  allRepos = repos;
-  currentPage = 0;
-}
-
-export function createRepoCard(repo: GitHubRepo): HTMLElement {
+function createRepoCard(repo: GitHubRepo): HTMLElement {
   const card = document.createElement("article");
   card.className = "project-card";
 
@@ -19,17 +22,12 @@ export function createRepoCard(repo: GitHubRepo): HTMLElement {
     ? `<span class="tag">${sanitizeHtml(repo.language)}</span>`
     : "";
 
-  const name = sanitizeHtml(repo.name);
-  const desc = sanitizeHtml(repo.description || "Sem descrição");
-  const url = sanitizeUrl(repo.html_url);
-  const label = sanitizeHtml(repo.html_url.replace("https://github.com/", ""));
-
   card.innerHTML = `
-    <h3>${name}</h3>
-    <p>${desc}</p>
+    <h3>${sanitizeHtml(repo.name)}</h3>
+    <p>${sanitizeHtml(repo.description || "Sem descrição")}</p>
     <p class="project-link">
       <span>Github:</span>
-      <a target="_blank" href="${url}">${label}</a>
+      <a target="_blank" href="${sanitizeUrl(repo.html_url)}">${sanitizeHtml(repo.html_url.replace("https://github.com/", ""))}</a>
     </p>
     <div class="tags">
       ${langTag}
@@ -67,99 +65,57 @@ function createEl(className: string): HTMLElement {
   return el;
 }
 
+let currentData: GitHubRepo[] | null = null;
+
+function renderPage(): void {
+  const container = document.getElementById("repos");
+  const loadMoreBtn = document.getElementById("load-more");
+  if (!container || !loadMoreBtn || !currentData) return;
+
+  const start = pageState.get() * PER_PAGE;
+  const page = currentData.slice(start, start + PER_PAGE);
+
+  page.forEach((repo) => container.appendChild(createRepoCard(repo)));
+
+  const hasMore = start + PER_PAGE < currentData.length;
+  loadMoreBtn.style.display = hasMore ? "inline-flex" : "none";
+}
+
 function renderSkeletons(): HTMLElement[] {
   return [createSkeleton(), createSkeleton(), createSkeleton()];
 }
 
-function showErrorModal(message: string): void {
-  const existing = document.getElementById("error-modal");
-  if (existing) existing.remove();
-
-  const modal = document.createElement("div");
-  modal.className = "error-modal";
-
-  const icon = document.createElement("div");
-  icon.className = "error-modal-icon";
-  icon.textContent = "!";
-
-  const text = document.createElement("p");
-  text.textContent = message;
-
-  const btn = document.createElement("button");
-  btn.className = "btn btn-primary error-modal-close";
-  btn.textContent = "Entendido";
-
-  modal.append(icon, text, btn);
-
-  const overlay = document.createElement("div");
-  overlay.id = "error-modal";
-  overlay.className = "error-modal-overlay";
-  overlay.appendChild(modal);
-
-  btn.addEventListener("click", () => overlay.remove());
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) overlay.remove();
-  });
-
-  document.body.appendChild(overlay);
-}
-
-export function renderPage(): void {
-  const container = document.getElementById("repos");
-  const loadMoreBtn = document.getElementById("load-more");
-  if (!container || !loadMoreBtn) return;
-
-  const start = currentPage * PER_PAGE;
-  const page = allRepos.slice(start, start + PER_PAGE);
-
-  page.forEach((repo) => container.appendChild(createRepoCard(repo)));
-
-  const hasMore = start + PER_PAGE < allRepos.length;
-  loadMoreBtn.style.display = hasMore ? "inline-flex" : "none";
-}
-
-export function nextPage(): void {
-  currentPage++;
-  renderPage();
-}
-
-export async function loadRepos(): Promise<void> {
-  const { getCache, isCacheValid } = await import("../github/cache");
-  const { fetchAllRepos } = await import("../github/api");
-
+function render(): void {
   const container = document.getElementById("repos");
   const loadMoreBtn = document.getElementById("load-more");
   if (!container) return;
 
-  const cached = getCache();
-  if (cached && isCacheValid(cached)) {
-    setRepos(cached.data);
-    container.replaceChildren();
-    renderPage();
+  if (reposQuery.loading) {
+    container.replaceChildren(...renderSkeletons());
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
     return;
   }
 
-  container.replaceChildren(...renderSkeletons());
-  if (loadMoreBtn) loadMoreBtn.style.display = "none";
-
-  try {
-    setRepos(await fetchAllRepos());
+  if (reposQuery.error) {
     container.replaceChildren();
-    renderPage();
-  } catch (err) {
-    console.error("Erro ao carregar repositórios:", err);
-    container.replaceChildren();
-    showErrorModal(
-      err instanceof Error
-        ? `Falha ao carregar projetos: ${err.message}`
-        : "Falha ao carregar projetos do GitHub. Tente novamente mais tarde.",
-    );
+    showErrorModal(reposQuery.error);
     if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    return;
   }
+
+  currentData = reposQuery.data;
+  pageState.set(0);
+  container.replaceChildren();
+  renderPage();
 }
 
 export function initProjects(): void {
-  document.getElementById("load-more")?.addEventListener("click", nextPage);
+  reposQuery.subscribe(render);
+
+  document.getElementById("load-more")?.addEventListener("click", () => {
+    pageState.set((p) => p + 1);
+    renderPage();
+  });
 
   const section = document.getElementById("projects");
   if (!section) return;
@@ -167,7 +123,7 @@ export function initProjects(): void {
   const observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-        loadRepos();
+        reposQuery.refetch();
         observer.disconnect();
       }
     },
