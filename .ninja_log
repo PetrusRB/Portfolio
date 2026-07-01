@@ -1,0 +1,7 @@
+# ninja log v7
+3	527	8045878507380401	CMakeFiles/server.dir/src/main.c.obj	73889af5c839b932
+8	532	8045878507429391	CMakeFiles/server.dir/src/server/server.c.obj	4bcb7ebd8c3f2efc
+12	533	8045878507473413	CMakeFiles/server.dir/src/server/utils.c.obj	425653001e6b0ec8
+533	652	8045878512673046	server.exe	ef59967ab2470cb0
+49	521	8045879228831980	CMakeFiles/server.dir/src/main.c.obj	73889af5c839b932
+522	606	8045879233559617	server.exe	ef59967ab2470cb0

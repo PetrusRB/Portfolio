@@ -1,0 +1,16 @@
+# Build
+build/
+
+# Dependencies
+node_modules/
+www/node_modules/
+
+# TypeScript compiled
+www/dist/
+
+# Lock files
+www/package-lock.json
+
+# Environment
+.env
+.env.*

@@ -7,7 +7,7 @@ int main(void) {
   if (!server_init(&server))
     return 1;
 
-  printf("Pressione Enter para parar o servidor...\n");
+  printf("Pressione qualquer coisa para parar o servidor (Enter é melhor)\n");
   getchar();
 
   server_stop(&server);

@@ -1,0 +1,3 @@
+C:/Users/Portosoft/OneDrive/Documentos/Codes/Aprendizados/C/server/CMakeFiles/server.dir
+C:/Users/Portosoft/OneDrive/Documentos/Codes/Aprendizados/C/server/CMakeFiles/edit_cache.dir
+C:/Users/Portosoft/OneDrive/Documentos/Codes/Aprendizados/C/server/CMakeFiles/rebuild_cache.dir
