@@ -1,4 +1,5 @@
 #include "server/utils.h"
+#include <mimalloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,14 +35,13 @@ static const char *get_mime(const char *url) {
   return "text/plain";
 }
 
-static enum MHD_Result send_file(struct MHD_Connection *connection,
-                                 FILE *fp, const char *mime,
-                                 enum MHD_Result status) {
+static enum MHD_Result send_file(struct MHD_Connection *connection, FILE *fp,
+                                 const char *mime, enum MHD_Result status) {
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   fseek(fp, 0, SEEK_SET);
 
-  char *buffer = malloc(size);
+  char *buffer = mi_malloc(size);
   if (!buffer) {
     fclose(fp);
     return MHD_NO;
@@ -51,11 +51,12 @@ static enum MHD_Result send_file(struct MHD_Connection *connection,
   fclose(fp);
 
   struct MHD_Response *response =
-      MHD_create_response_from_buffer(size, buffer, MHD_RESPMEM_MUST_FREE);
+      MHD_create_response_from_buffer(size, buffer, MHD_RESPMEM_MUST_COPY);
   MHD_add_response_header(response, "Content-Type", mime);
 
   enum MHD_Result ret = MHD_queue_response(connection, status, response);
   MHD_destroy_response(response);
+  mi_free(buffer);
   return ret;
 }
 

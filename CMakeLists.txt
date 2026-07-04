@@ -13,6 +13,8 @@ endif()
 find_path(MHD_INCLUDE_DIR microhttpd.h PATHS ${MHD_PREFIX}/include)
 find_library(MHD_LIBRARY NAMES microhttpd PATHS ${MHD_PREFIX}/lib)
 
+find_library(MIMALLOC_LIBRARY NAMES mimalloc PATHS ${MHD_PREFIX}/lib)
+
 if(NOT MHD_INCLUDE_DIR OR NOT MHD_LIBRARY)
     message(FATAL_ERROR "libmicrohttpd nao encontrado em ${MHD_PREFIX}")
 endif()
@@ -25,4 +27,4 @@ add_executable(${PROJECT_NAME}
     src/server/utils.c
 )
 
-target_link_libraries(${PROJECT_NAME} ${MHD_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${MHD_LIBRARY} ${MIMALLOC_LIBRARY})

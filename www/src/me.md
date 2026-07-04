@@ -39,9 +39,12 @@ desenvolver API's, Bots e Jogos 3D.
     border-radius: 50%;
     flex-shrink: 0;
   }
+  .tech-title {
+    color: var(--primary);    
+  }
 </style>
 
-<h3>
+<h3 class="tech-title">
   Tecnologias e ferramentas
 </h3>
 
